@@ -61,7 +61,20 @@ public class BoardController : MonoBehaviour
 
     private void Fill()
     {
+        // Clear dữ liệu cũ trước khi tạo mới
+        AutoGameManager autoGameManager = GameObject.FindObjectOfType<AutoGameManager>();
+        if (autoGameManager != null)
+        {
+            autoGameManager.ClearItemTransforms();
+        }
+        
         m_board.Fill();
+        
+        // Hoàn tất việc đăng ký Transform của các item vào AutoGameManager
+        if (autoGameManager != null)
+        {
+            autoGameManager.FinalizeItemRegistration();
+        }
     }
 
     private void OnGameStateChange(GameManager.eStateGame state)

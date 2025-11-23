@@ -16,8 +16,22 @@ public class UIPanelMain : MonoBehaviour, IMenu
 
     private void Awake()
     {
-        btnMoves.onClick.AddListener(OnClickMoves);
-        btnTimer.onClick.AddListener(OnClickTimer);
+        // Tìm BoardController nếu chưa được gán
+        if (boardController == null)
+        {
+            boardController = FindObjectOfType<BoardController>();
+        }
+
+        // Kiểm tra null trước khi sử dụng
+        if (btnMoves != null)
+        {
+            btnMoves.onClick.AddListener(OnClickMoves);
+        }
+        
+        if (btnTimer != null)
+        {
+            btnTimer.onClick.AddListener(OnClickTimer);
+        }
     }
 
     private void OnDestroy()

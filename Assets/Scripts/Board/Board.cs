@@ -73,6 +73,9 @@ public class Board
 
     internal void Fill()
     {
+        // Tìm AutoGameManager một lần để tối ưu hiệu suất
+        AutoGameManager autoGameManager = GameObject.FindObjectOfType<AutoGameManager>();
+        
         List<NormalItem.eNormalType> itemTypesPool = new List<NormalItem.eNormalType>();
         for (int i = 0; i < 3; i++)
         {
@@ -163,6 +166,12 @@ public class Board
                 item.SetType(selectedType);
                 item.SetView();
                 item.SetViewRoot(m_root);
+
+                // Lưu Transform vào AutoGameManager
+                if (autoGameManager != null && item.View != null)
+                {
+                    autoGameManager.RegisterItemTransform(selectedType, item.View);
+                }
 
                 cell.Assign(item);
                 cell.ApplyItemPosition(false);

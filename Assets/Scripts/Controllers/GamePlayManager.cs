@@ -77,15 +77,30 @@ public class GamePlayManager : MonoBehaviour
             
             if (clickedCell != null && !clickedCell.IsEmpty && !PlayerSelectedItem.Contains(clickedCell))
             {
-                PlayerSelectedItem.Add(clickedCell);
-                
-                playerCount++;
-                
-                int slotIndex = PlayerSelectedItem.Count - 1;
-                
-                MoveItemToSlot(clickedCell, m_slots[slotIndex], slotIndex);
+                ProcessCellClick(clickedCell);
             }
         }
+    }
+
+    public void ProcessCellClick(Cell clickedCell)
+    {
+        if (clickedCell == null || clickedCell.IsEmpty || PlayerSelectedItem.Contains(clickedCell))
+        {
+            return;
+        }
+
+        if (PlayerSelectedItem.Count >= 5)
+        {
+            return;
+        }
+
+        PlayerSelectedItem.Add(clickedCell);
+        
+        playerCount++;
+        
+        int slotIndex = PlayerSelectedItem.Count - 1;
+        
+        MoveItemToSlot(clickedCell, m_slots[slotIndex], slotIndex);
     }
 
     private void MoveItemToSlot(Cell cell, RectTransform targetSlot, int slotIndex)
